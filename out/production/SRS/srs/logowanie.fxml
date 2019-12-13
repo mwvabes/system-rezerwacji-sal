@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="srs.Controller">
+   <bottom>
+      <AnchorPane disable="true" prefHeight="35.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <Text layoutX="165.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="System Rezerwacji Sal by Marcin Wielgos" />
+         </children>
+      </AnchorPane>
+   </bottom>
+   <top>
+      <VBox prefHeight="40.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <ToolBar prefHeight="40.0" prefWidth="200.0">
+              <items>
+                  <Button fx:id="showSala" mnemonicParsing="false" onAction="#showSala" text="Sala" />
+                  <Button fx:id="showMenu" mnemonicParsing="false" onAction="#showMenu" text="Menu" />
+              </items>
+            </ToolBar>
+         </children></VBox>
+   </top>
+</BorderPane>
