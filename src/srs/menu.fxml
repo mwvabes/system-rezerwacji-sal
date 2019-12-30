@@ -219,7 +219,7 @@
                                   <PropertyValueFactory property="eqName" />
                               </cellValueFactory>
                             </TableColumn>
-                            <TableColumn fx:id="eqAmount" minWidth="0.0" prefWidth="50.0" text="Ilość" >
+                            <TableColumn fx:id="eqAmount" minWidth="0.0" prefWidth="50.0" text="Ilość">
                               <cellValueFactory>
                                   <PropertyValueFactory property="eqAmount" />
                               </cellValueFactory>
@@ -240,12 +240,12 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button disable="true" mnemonicParsing="false" prefHeight="70.0" prefWidth="350.0" text="Rezerwuj" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                  <Button fx:id="bookIt" disable="true" mnemonicParsing="false" prefHeight="70.0" prefWidth="350.0" text="Rezerwuj" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button disable="true" mnemonicParsing="false" prefHeight="70.0" prefWidth="350.0" text="Szczegóły rezerwacji" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                  <Button disable="true" mnemonicParsing="false" prefHeight="70.0" prefWidth="350.0" text="Historia rezerwacji" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin>
@@ -267,11 +267,14 @@
             <ToolBar prefHeight="47.0" prefWidth="764.0">
                <items>
                   <CheckBox fx:id="showOnlyToReservation" mnemonicParsing="false" prefHeight="17.0" prefWidth="228.0" text="Pokazuj tylko dostępne do rezerwacji" />
-                  <CheckBox mnemonicParsing="false" text="Uwzględnij daty" />
+                  <CheckBox fx:id="takeDatesToQuery" mnemonicParsing="false" onAction="#getRoomSpecificInfo" text="Uwzględnij daty" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="| Od:" />
-                  <DatePicker prefHeight="25.0" prefWidth="130.0" />
+                  <DatePicker fx:id="dateStart" prefHeight="25.0" prefWidth="130.0" />
+                  <TextField fx:id="timeStart" prefHeight="25.0" prefWidth="54.0" text="09:00" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Do:" />
-                  <DatePicker prefHeight="25.0" prefWidth="130.0" />
+                  <DatePicker fx:id="dateEnd" prefHeight="25.0" prefWidth="130.0" />
+                  <TextField fx:id="timeEnd" prefHeight="25.0" prefWidth="54.0" text="16:00" />
+                  <Button mnemonicParsing="false" onAction="#timeChanged" text="Zatwierdź przedział czasowy" />
                </items>
             </ToolBar>
          </children>

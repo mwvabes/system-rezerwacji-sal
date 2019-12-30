@@ -1,5 +1,6 @@
 package srs;
 
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
@@ -10,15 +11,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import org.hibernate.sql.Select;
-import srs.subtypes.BuildingChoose;
-import srs.subtypes.EquipmentInfo;
-import srs.subtypes.RoomInfo;
-import srs.subtypes.TypeChoose;
+import srs.subtypes.*;
 
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.net.URL;
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 public class Menu implements Initializable {
@@ -48,13 +50,24 @@ public class Menu implements Initializable {
   @FXML private Text seatsInfo;
   @FXML private Text roomTypeInfo;
 
+  @FXML private TextField timeStart;
+  @FXML private TextField timeEnd;
+  @FXML private DatePicker dateStart;
+  @FXML private DatePicker dateEnd;
+
   @FXML private CheckBox showOnlyToReservation;
+  @FXML private CheckBox takeDatesToQuery;
 
   @FXML private Text lastActionInfo;
 
   @FXML private TextArea equipmentDescriptionInfo;
 
   @FXML private TableView<EquipmentInfo> equipmentInfo;
+
+  @FXML private Button bookIt;
+
+  public boolean isDateValid = false; //Checks if time slot is valid for displaying the rooms
+  public ReservationInfo reservationInfo = new ReservationInfo(); //Objects which stores demand of user for date
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
@@ -66,6 +79,11 @@ public class Menu implements Initializable {
     } catch (SQLException e) {
       e.printStackTrace();
     }
+
+    LocalDate now = LocalDate.now();
+
+    dateStart.setValue(now);
+    dateEnd.setValue(now);
 
     tableRooms.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
       try {
@@ -94,6 +112,49 @@ public class Menu implements Initializable {
       }
     });
 
+  }
+
+  @FXML
+  public void timeChanged() throws SQLException {
+    TextField[] fields = {timeEnd, timeStart};
+    System.out.println("y1");
+    for (int i = 0; i < fields.length; i++) {
+      System.out.println("a");
+      if (fields[i].textProperty().get().matches("^\\d:\\d\\d$")) {
+
+        fields[i].textProperty().setValue("0" + fields[i].textProperty().get());
+
+        checkTimeValidation();
+
+      } else if (fields[i].textProperty().get().matches("^\\d\\d:\\d\\d$")) {
+        checkTimeValidation();
+      } else {
+        fields[i].textProperty().setValue("20:00");
+        checkTimeValidation();
+      }
+    }
+
+
+  }
+
+  void checkTimeValidation() throws SQLException {
+
+    String start = dateStart.getValue() + " " + timeStart.textProperty().get() + ":00.0";
+    String end = dateEnd.getValue() + " " + timeEnd.textProperty().get() + ":00.0";
+
+    reservationInfo.setTimeStart(Timestamp.valueOf(start));
+    reservationInfo.setTimeEnd(Timestamp.valueOf(end));
+    System.out.println(reservationInfo.getTimeStart());
+    System.out.println(reservationInfo.getTimeEnd());
+    if (!reservationInfo.isTimeSlotValid()) {
+      lastActionInfo.setText("Nieprawidłowy przedział czasowy!");
+      isDateValid = false;
+    }
+    else {
+      lastActionInfo.setText("Wyświetlam sale dostępne w podanym przedziale czasu");
+      isDateValid = true;
+    }
+    buildingAndTypeChoosed(new ActionEvent());
   }
 
   @FXML
@@ -154,20 +215,34 @@ public class Menu implements Initializable {
   void viewRoomsTable(Connection conn, int building, int type) throws SQLException {
 
     Statement stmt = null;
-    String query = "";
+    String query = "select rooms.ID_room, rooms.name, rooms.seats, room_types.name FROM srs.rooms, srs.room_types WHERE rooms.id_type = room_types.id_type";
     if (building == 0 && type == 0) {
-      query = "select rooms.ID_room, rooms.name, rooms.seats, room_types.name FROM srs.rooms, srs.room_types WHERE rooms.id_type = room_types.id_type";
+      //
     } else if (building != 0 && type == 0) {
-      query = "select rooms.ID_room, rooms.name, rooms.seats, room_types.name FROM srs.rooms, srs.room_types WHERE rooms.id_type = room_types.id_type AND rooms.ID_building = " + building;
+      query += " AND rooms.ID_building = " + building;
     } else if (building == 0 && type != 0) {
-      query = "select rooms.ID_room, rooms.name, rooms.seats, room_types.name FROM srs.rooms, srs.room_types WHERE rooms.id_type = room_types.id_type AND rooms.id_type = " + type;
+      query += " AND rooms.id_type = " + type;
     } else {
-      query = "select rooms.ID_room, rooms.name, rooms.seats, room_types.name FROM srs.rooms, srs.room_types WHERE rooms.id_type = room_types.id_type AND rooms.ID_building = " + building + " AND rooms.id_type = " + type;
+      query += " AND rooms.ID_building = " + building + " AND rooms.id_type = " + type;
     }
 
     if (showOnlyToReservation.isSelected()) {
       query += " AND rooms.reservation_ability = 1";
     }
+
+    //SELECT * FROM `reservations` WHERE `meet_time_start` BETWEEN '2019-12-12 00:00:00.000000' AND '2019-12-19 00:00:00.000000'
+
+    if (isDateValid && takeDatesToQuery.isSelected()) {
+      //query += " AND rooms.ID_room = reservations.ID_room";
+//      query += " AND '" + reservationInfo.getTimeStart() + "' NOT BETWEEN reservations.meet_time_start AND reservations.meet_time_end" +
+//               " AND '" + reservationInfo.getTimeEnd() + "' NOT BETWEEN reservations.meet_time_start AND reservations.meet_time_end";
+      query += " AND ID_room not in ( select ID_room from reservations where " +
+          "(meet_time_start > '" + reservationInfo.getTimeStart() + "' and meet_time_start < '" + reservationInfo.getTimeEnd() + "') or" +
+          "(meet_time_end > '" + reservationInfo.getTimeStart() + "' and meet_time_end < '" + reservationInfo.getTimeEnd() + "') or " +
+          "(meet_time_start < '" + reservationInfo.getTimeStart() + "' and meet_time_end > '" + reservationInfo.getTimeEnd() + "'))";
+    }
+
+    System.out.println(query);
 
     try {
       stmt = conn.createStatement();
@@ -213,6 +288,10 @@ public class Menu implements Initializable {
 
       Statement stmt = null;
       String query = "select * from rooms, buildings, room_types WHERE ID_room = " + selectedRoom.getIdRoom() + " AND rooms.ID_building = buildings.ID_building AND rooms.id_type = room_types.id_type";
+
+      Statement stmtIsAvailableForReservation = null;
+      String queryIsAvailableForReservation = " SELECT rooms.reservation_ability from rooms WHERE rooms.ID_room = " + selectedRoom.getIdRoom();
+
       try {
         stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery(query);
@@ -285,6 +364,20 @@ public class Menu implements Initializable {
           showEquipmentInfo(rs.getInt("rooms.ID_room"));
         }
 
+        stmtIsAvailableForReservation = conn.createStatement();
+        ResultSet availableRS = stmtIsAvailableForReservation.executeQuery(queryIsAvailableForReservation);
+        boolean isAvailable = false;
+        if (availableRS.next()) {
+          if (availableRS.getInt("rooms.reservation_ability") == 1) isAvailable = true;
+        }
+
+        if (takeDatesToQuery.isSelected() && isAvailable) {
+          bookIt.setDisable(false);
+        }
+        else {
+          bookIt.setDisable(true);
+        }
+
       } catch (SQLException e ) {
         System.out.println(e);
       } finally {
@@ -311,6 +404,9 @@ public class Menu implements Initializable {
         roomTypeInfo.setText(" ");
         buildingFullName.setText(" ");
     }
+
+
+
   }
 
   void showEquipmentInfo(int ID_room) throws SQLException {
@@ -349,6 +445,8 @@ public class Menu implements Initializable {
     });
 
   }
+
+
 
 
 }
