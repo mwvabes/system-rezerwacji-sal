@@ -19,6 +19,7 @@ public class start extends Application {
     SceneManager.addScene("logowanie", "/srs/logowanie.fxml");
     SceneManager.addScene("menu", "/srs/menu.fxml");
     SceneManager.addScene("sala", "/srs/sala.fxml");
+    SceneManager.addScene("reservation_history", "/srs/reservation_history.fxml");
 
     SceneManager.renderScene("logowanie");
 

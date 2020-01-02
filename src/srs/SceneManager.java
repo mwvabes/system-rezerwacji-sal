@@ -3,7 +3,9 @@ package srs;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.util.Hashtable;
@@ -11,6 +13,7 @@ import java.util.Hashtable;
 public class SceneManager {
 
   private static Stage stage;
+  private static Stage stageTemp;
   private static Hashtable<String, String> view = new Hashtable<>();
 
   public static void addScene(String name, String path) throws IOException {

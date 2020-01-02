@@ -6,15 +6,22 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import org.hibernate.sql.Select;
 import srs.subtypes.*;
 
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.text.ParseException;
@@ -27,44 +34,76 @@ public class Menu implements Initializable {
 
   //int idRoom, int idBuilding, String name, int seats, int maxTimeReservation, byte reservationAbility, int idType
 
-  @FXML private TableView<RoomInfo> tableRooms;
-  @FXML private ComboBox<BuildingChoose> chooseBuildingCombo;
-  @FXML private ComboBox<TypeChoose> chooseTypeCombo;
+  @FXML
+  private TableView<RoomInfo> tableRooms;
+  @FXML
+  private ComboBox<BuildingChoose> chooseBuildingCombo;
+  @FXML
+  private ComboBox<TypeChoose> chooseTypeCombo;
 
-  @FXML private Text buildingNameInfo;
-  @FXML private Text buildingAddressInfo;
-  @FXML private Text buildingAddressInfoLabel;
-  @FXML private Text buildingAreaInfo;
-  @FXML private Text buildingAreaInfoLabel;
-  @FXML private Text buildingFullName;
+  @FXML
+  private Text buildingNameInfo;
+  @FXML
+  private Text buildingAddressInfo;
+  @FXML
+  private Text buildingAddressInfoLabel;
+  @FXML
+  private Text buildingAreaInfo;
+  @FXML
+  private Text buildingAreaInfoLabel;
+  @FXML
+  private Text buildingFullName;
 
-  @FXML private Text floorInfo;
-  @FXML private Text floorInfoLabel;
+  @FXML
+  private Text floorInfo;
+  @FXML
+  private Text floorInfoLabel;
 
-  @FXML private Text wingInfo;
-  @FXML private Text wingInfoLabel;
+  @FXML
+  private Text wingInfo;
+  @FXML
+  private Text wingInfoLabel;
 
-  @FXML private Text roomFullName;
-  @FXML private Text roomFullNameLabel;
-  @FXML private Text roomNameInfo;
-  @FXML private Text seatsInfo;
-  @FXML private Text roomTypeInfo;
+  @FXML
+  private Text roomFullName;
+  @FXML
+  private Text roomFullNameLabel;
+  @FXML
+  private Text roomNameInfo;
+  @FXML
+  private Text seatsInfo;
+  @FXML
+  private Text roomTypeInfo;
 
-  @FXML private TextField timeStart;
-  @FXML private TextField timeEnd;
-  @FXML private DatePicker dateStart;
-  @FXML private DatePicker dateEnd;
+  @FXML
+  private TextField timeStart;
+  @FXML
+  private TextField timeEnd;
+  @FXML
+  private DatePicker dateStart;
+  @FXML
+  private DatePicker dateEnd;
 
-  @FXML private CheckBox showOnlyToReservation;
-  @FXML private CheckBox takeDatesToQuery;
+  @FXML
+  private CheckBox showOnlyToReservation;
+  @FXML
+  private CheckBox takeDatesToQuery;
 
-  @FXML private Text lastActionInfo;
+  @FXML
+  private Text lastActionInfo;
 
-  @FXML private TextArea equipmentDescriptionInfo;
+  @FXML
+  private TextArea equipmentDescriptionInfo;
 
-  @FXML private TableView<EquipmentInfo> equipmentInfo;
+  @FXML
+  private TableView<EquipmentInfo> equipmentInfo;
 
-  @FXML private Button bookIt;
+  @FXML
+  private Button bookIt;
+  @FXML
+  private Button statusScreen;
+  @FXML
+  private Button showReservationHistory;
 
   public boolean isDateValid = false; //Checks if time slot is valid for displaying the rooms
   public ReservationInfo reservationInfo = new ReservationInfo(); //Objects which stores demand of user for date
@@ -93,14 +132,105 @@ public class Menu implements Initializable {
       }
     });
 
+    showReservationHistory.setOnAction(new EventHandler<ActionEvent>() {
+      public void handle(ActionEvent event) {
+          String path = "";
+          FXMLLoader fxmlLoader = new FXMLLoader();
+          try {
+
+            fxmlLoader.setLocation(getClass().getResource("/srs/reservation_history.fxml"));
+            /*
+             * if "fx:controller" is not set in fxml
+             * fxmlLoader.setController(NewWindowController);
+             */
+            Scene scene1 = new Scene(fxmlLoader.load(), 600, 400);
+            Stage stage1 = new Stage();
+            stage1.setTitle("Historia rezerwacji");
+            stage1.setScene(scene1);
+            stage1.show();
+
+          } catch (IOException e) {
+            System.err.println("Nie można załadować pliku XML z widokiem: " + path);
+            e.printStackTrace();
+          } catch (RuntimeException e) {
+            System.err.println("Nazwa widoku jest nieprawidłowa!");
+            System.out.println(e);
+            //e.printStackTrace();
+          }
+
+          ReservationHistory reservation = fxmlLoader.getController();
+        if (tableRooms.getSelectionModel().getSelectedItem() != null) {
+          try {
+            reservation.showReservationInfo(tableRooms.getSelectionModel().getSelectedItem().getIdRoom());
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+        }
+
+
+      }
+    });
+
+    dateStart.setOnAction(new EventHandler<ActionEvent>() {
+      @Override
+      public void handle(ActionEvent event) {
+        bookIt.setDisable(true);
+      }
+    });
+
+    dateEnd.setOnAction(new EventHandler<ActionEvent>() {
+      @Override
+      public void handle(ActionEvent event) {
+        bookIt.setDisable(true);
+      }
+    });
+
+    statusScreen.setOnAction(new EventHandler<ActionEvent>() {
+      public void handle(ActionEvent event) {
+        String path = "";
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        try {
+
+          fxmlLoader.setLocation(getClass().getResource("/srs/statusScreen.fxml"));
+          /*
+           * if "fx:controller" is not set in fxml
+           * fxmlLoader.setController(NewWindowController);
+           */
+          Scene scene1 = new Scene(fxmlLoader.load(), 600, 400);
+          Stage stage1 = new Stage();
+          stage1.setTitle("Status sali");
+          stage1.setScene(scene1);
+          stage1.show();
+
+        } catch (IOException e) {
+          System.err.println("Nie można załadować pliku XML z widokiem: " + path);
+          e.printStackTrace();
+        } catch (RuntimeException e) {
+          System.err.println("Nazwa widoku jest nieprawidłowa!");
+          System.out.println(e);
+          //e.printStackTrace();
+        }
+
+        StatusScreen statusScreen = fxmlLoader.getController();
+        if (tableRooms.getSelectionModel().getSelectedItem() != null) {
+          try {
+            statusScreen.loadData(tableRooms.getSelectionModel().getSelectedItem().getIdRoom());
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+        }
+
+
+      }
+    });
+
     showOnlyToReservation.selectedProperty().addListener(new ChangeListener<Boolean>() {
       @Override
       public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 
         if (showOnlyToReservation.isSelected()) {
           lastActionInfo.setText("Wyświetlono tylko dostępne do rezerwacji");
-        }
-        else {
+        } else {
           lastActionInfo.setText("Wyświetlono wszystkie dostępne sale");
         }
 
@@ -111,6 +241,8 @@ public class Menu implements Initializable {
         }
       }
     });
+
+
 
   }
 
@@ -149,8 +281,7 @@ public class Menu implements Initializable {
     if (!reservationInfo.isTimeSlotValid()) {
       lastActionInfo.setText("Nieprawidłowy przedział czasowy!");
       isDateValid = false;
-    }
-    else {
+    } else {
       lastActionInfo.setText("Wyświetlam sale dostępne w podanym przedziale czasu");
       isDateValid = true;
     }
@@ -179,10 +310,12 @@ public class Menu implements Initializable {
         chooseBuilding.add(b);
       }
       chooseBuildingCombo.getSelectionModel().select(0);
-    } catch (SQLException e ) {
+    } catch (SQLException e) {
       System.out.println(e);
     } finally {
-      if (stmt != null) { stmt.close(); }
+      if (stmt != null) {
+        stmt.close();
+      }
     }
 
   }
@@ -204,10 +337,12 @@ public class Menu implements Initializable {
         chooseType.add(t);
       }
       chooseTypeCombo.getSelectionModel().select(0);
-    } catch (SQLException e ) {
+    } catch (SQLException e) {
       System.out.println(e);
     } finally {
-      if (stmt != null) { stmt.close(); }
+      if (stmt != null) {
+        stmt.close();
+      }
     }
 
   }
@@ -254,10 +389,12 @@ public class Menu implements Initializable {
 
         rooms.add(room);
       }
-    } catch (SQLException e ) {
+    } catch (SQLException e) {
       System.out.println(e);
     } finally {
-      if (stmt != null) { stmt.close(); }
+      if (stmt != null) {
+        stmt.close();
+      }
     }
 
     tableRooms.getSelectionModel().clearSelection();
@@ -296,7 +433,7 @@ public class Menu implements Initializable {
         stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery(query);
 
-        if(rs.next()) {
+        if (rs.next()) {
           buildingNameInfo.setText(rs.getString("buildings.name"));
           roomNameInfo.setText(rs.getString("rooms.name"));
           seatsInfo.setText(String.valueOf(rs.getInt("rooms.seats")));
@@ -373,38 +510,46 @@ public class Menu implements Initializable {
 
         if (takeDatesToQuery.isSelected() && isAvailable) {
           bookIt.setDisable(false);
-        }
-        else {
+        } else {
           bookIt.setDisable(true);
         }
 
-      } catch (SQLException e ) {
+        if (isAvailable) {
+          showReservationHistory.setDisable(false);
+        } else {
+          showReservationHistory.setDisable(true);
+        }
+
+      } catch (SQLException e) {
         System.out.println(e);
       } finally {
-        if (stmt != null) { stmt.close(); }
+        if (stmt != null) {
+          stmt.close();
+        }
       }
 
-    }
-    else {
+      statusScreen.setVisible(true);
+
+    } else {
       buildingNameInfo.setText("--");
       roomNameInfo.setText("-");
       seatsInfo.setText(("--"));
-        floorInfo.setText(" ");
-        floorInfoLabel.setText("--");
-        wingInfo.setText(" ");
-        wingInfoLabel.setText("--");
-        roomFullName.setText(" ");
-        roomFullNameLabel.setText("--");
-        roomFullName.setText(" ");
-        roomFullNameLabel.setText("--");
-        buildingAddressInfo.setText(" ");
-        buildingAddressInfoLabel.setText("--");
-        buildingAreaInfo.setText(" ");
-        buildingAreaInfoLabel.setText("--");
-        roomTypeInfo.setText(" ");
-        buildingFullName.setText(" ");
+      floorInfo.setText(" ");
+      floorInfoLabel.setText("--");
+      wingInfo.setText(" ");
+      wingInfoLabel.setText("--");
+      roomFullName.setText(" ");
+      roomFullNameLabel.setText("--");
+      roomFullName.setText(" ");
+      roomFullNameLabel.setText("--");
+      buildingAddressInfo.setText(" ");
+      buildingAddressInfoLabel.setText("--");
+      buildingAreaInfo.setText(" ");
+      buildingAreaInfoLabel.setText("--");
+      roomTypeInfo.setText(" ");
+      buildingFullName.setText(" ");
+      statusScreen.setVisible(false);
     }
-
 
 
   }
@@ -429,24 +574,23 @@ public class Menu implements Initializable {
         equipmentInfos.add(equipmentInfo);
 
       }
-    } catch (SQLException e ) {
+    } catch (SQLException e) {
       System.out.println(e);
     } finally {
-      if (stmt != null) { stmt.close(); }
+      if (stmt != null) {
+        stmt.close();
+      }
     }
 
     equipmentInfo.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
       if (equipmentInfo.getSelectionModel().getSelectedItem() != null) {
         equipmentDescriptionInfo.setText(equipmentInfo.getSelectionModel().getSelectedItem().getEqDescription());
-      }
-      else {
+      } else {
         equipmentDescriptionInfo.setText("");
       }
     });
 
   }
-
-
 
 
 }

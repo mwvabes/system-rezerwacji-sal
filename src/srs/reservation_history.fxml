@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.cell.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+
+<?import java.net.URL?>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="srs.ReservationHistory">
+    <top>
+        <GridPane BorderPane.alignment="CENTER">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="380.0" minWidth="10.0" prefWidth="380.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="293.0" minWidth="10.0" prefWidth="220.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="293.0" minWidth="10.0" prefWidth="220.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Historia rezerwacji sali" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                <Text fx:id="roomName" strokeType="OUTSIDE" strokeWidth="0.0" text=" " GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                    <font>
+                        <Font name="System Bold" size="22.0" />
+                    </font>
+                </Text>
+                <Text fx:id="buildingName" strokeType="OUTSIDE" strokeWidth="0.0" text=" " GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                    <font>
+                        <Font size="22.0" />
+                    </font>
+                </Text>
+            </children>
+        </GridPane>
+    </top>
+    <center>
+        <GridPane BorderPane.alignment="CENTER">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <TableView fx:id="reservationsInfoTable" prefHeight="200.0" prefWidth="200.0">
+                    <columns>
+                        <TableColumn fx:id="userName" maxWidth="200.0" prefWidth="200.0" resizable="false" text="Użytkownik">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="userName" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn fx:id="timeStartDate" maxWidth="200.0" prefWidth="200.0" resizable="false" text="Od">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="timeStartDate" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn fx:id="timeEndDate" maxWidth="200.0" prefWidth="194.0" resizable="false" text="Do">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="timeEndDate" />
+                            </cellValueFactory>
+                        </TableColumn>
+                    </columns>
+                </TableView>
+            </children>
+        </GridPane>
+    </center>
+    <bottom>
+        <ToolBar styleClass="footer" nodeOrientation="RIGHT_TO_LEFT" prefHeight="25.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+            <items>
+                <Button fx:id="closeButton" mnemonicParsing="false" onAction="#closeStage" text="Zamknij" />
+            </items>
+        </ToolBar>
+    </bottom>
+
+    <stylesheets>
+        <URL value="@reservationHistory.css" />
+    </stylesheets>
+
+</BorderPane>

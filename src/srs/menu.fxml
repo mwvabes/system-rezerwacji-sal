@@ -205,6 +205,7 @@
                                           <Insets bottom="5.0" top="5.0" />
                                        </GridPane.margin>
                                     </Text>
+                                    <Button fx:id="statusScreen" mnemonicParsing="false" text="Ekran statusu" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                                  </children>
                                  <HBox.margin>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -245,7 +246,7 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button disable="true" mnemonicParsing="false" prefHeight="70.0" prefWidth="350.0" text="Historia rezerwacji" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                  <Button fx:id="showReservationHistory" disable="true" mnemonicParsing="false" prefHeight="70.0" prefWidth="350.0" text="Historia rezerwacji" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin>
@@ -267,7 +268,7 @@
             <ToolBar prefHeight="47.0" prefWidth="764.0">
                <items>
                   <CheckBox fx:id="showOnlyToReservation" mnemonicParsing="false" prefHeight="17.0" prefWidth="228.0" text="Pokazuj tylko dostępne do rezerwacji" />
-                  <CheckBox fx:id="takeDatesToQuery" mnemonicParsing="false" onAction="#getRoomSpecificInfo" text="Uwzględnij daty" />
+                  <CheckBox fx:id="takeDatesToQuery" mnemonicParsing="false" text="Uwzględnij daty" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="| Od:" />
                   <DatePicker fx:id="dateStart" prefHeight="25.0" prefWidth="130.0" />
                   <TextField fx:id="timeStart" prefHeight="25.0" prefWidth="54.0" text="09:00" />

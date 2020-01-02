@@ -1,17 +1,23 @@
 package srs.subtypes;
 
-import java.sql.Date;
-import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class ReservationInfo {
 
-  int ID_user;
-  int ID_room;
-  Timestamp timeStart;
-  Timestamp timeEnd;
+  private String userName;
+  private int ID_user;
+  private int ID_room;
+  private Timestamp timeStart;
+  private Timestamp timeEnd;
+  private LocalDateTime timeStartDate;
+  private LocalDateTime timeEndDate;
 
   public ReservationInfo() {
+  }
+
+  public ReservationInfo(String name, String surname) {
+    this.userName = name + " " + surname;
   }
 
   public ReservationInfo(Timestamp timeStart, Timestamp timeEnd) {
@@ -26,9 +32,39 @@ public class ReservationInfo {
     this.timeEnd = timeEnd;
   }
 
+  public ReservationInfo(String name, String surname, Timestamp timeStart, Timestamp timeEnd) {
+    this.userName = name + " " + surname;
+    this.timeStartDate = timeStart.toLocalDateTime();
+    this.timeEndDate = timeEnd.toLocalDateTime();
+  }
+
   public boolean isTimeSlotValid() {
     if (timeStart.before(timeEnd)) return true;
     else return false;
+  }
+
+  public String getUserName() {
+    return userName;
+  }
+
+  public void setUserName(String userName) {
+    this.userName = userName;
+  }
+
+  public LocalDateTime getTimeStartDate() {
+    return timeStartDate;
+  }
+
+  public void setTimeStartDate(LocalDateTime timeStartDate) {
+    this.timeStartDate = timeStartDate;
+  }
+
+  public LocalDateTime getTimeEndDate() {
+    return timeEndDate;
+  }
+
+  public void setTimeEndDate(LocalDateTime timeEndDate) {
+    this.timeEndDate = timeEndDate;
   }
 
   public int getID_user() {
@@ -61,5 +97,18 @@ public class ReservationInfo {
 
   public void setTimeEnd(Timestamp timeEnd) {
     this.timeEnd = timeEnd;
+  }
+
+  @Override
+  public String toString() {
+    return "ReservationInfo{" +
+        "name='" + userName + '\'' +
+        ", ID_user=" + ID_user +
+        ", ID_room=" + ID_room +
+        ", timeStart=" + timeStart +
+        ", timeEnd=" + timeEnd +
+        ", timeStartDate=" + timeStartDate +
+        ", timeEndDate=" + timeEndDate +
+        '}';
   }
 }

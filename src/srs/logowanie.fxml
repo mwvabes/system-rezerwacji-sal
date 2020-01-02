@@ -14,9 +14,9 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="srs.Logowanie">
    <top>
-      <VBox prefHeight="40.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox maxHeight="40.0" minHeight="25.0" prefHeight="40.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
          <children>
-            <ToolBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="200.0">
+            <ToolBar maxHeight="40.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="1000.0">
                <items>
                   <Button fx:id="closeButton" mnemonicParsing="false" onAction="#closeStage" text="Wyjście" />
                </items></ToolBar>
@@ -49,7 +49,8 @@
                </font>
                <GridPane.margin>
                   <Insets bottom="5.0" />
-               </GridPane.margin></Text>
+               </GridPane.margin>
+            </Text>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="System Rezerwacji Sal" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
                <font>
                   <Font size="20.0" />
@@ -81,11 +82,13 @@
             <Text fx:id="infoAvailableForReservation" fill="#797979" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="171.13671875" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="BOTTOM">
                <GridPane.margin>
                   <Insets bottom="5.0" />
-               </GridPane.margin></Text>
+               </GridPane.margin>
+            </Text>
             <Text fx:id="infoConnectionIsValid" fill="#838383" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="BOTTOM">
                <GridPane.margin>
                   <Insets bottom="5.0" />
-               </GridPane.margin></Text>
+               </GridPane.margin>
+            </Text>
          </children>
       </GridPane>
    </center>
