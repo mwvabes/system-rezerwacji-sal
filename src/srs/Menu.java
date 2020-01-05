@@ -244,6 +244,11 @@ public class Menu implements Initializable {
 
 
 
+  } //END INITIALIZE ----------------------------------------------
+
+  UserInfo currentLoggedUser = new UserInfo();
+  void setUserSession(UserInfo user) {
+    currentLoggedUser = user;
   }
 
   @FXML
@@ -550,6 +555,12 @@ public class Menu implements Initializable {
       buildingFullName.setText(" ");
       statusScreen.setVisible(false);
     }
+
+
+  }
+
+  void bookIt() {
+
 
 
   }
