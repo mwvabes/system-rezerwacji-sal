@@ -1,33 +1,23 @@
 package srs;
 
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import org.hibernate.sql.Select;
 import srs.subtypes.*;
 
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 public class Menu implements Initializable {
@@ -110,6 +100,7 @@ public class Menu implements Initializable {
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
+
     try {
       Connection conn = new DbConnection().connect();
       viewRoomsTable(conn, 0, 0);
@@ -249,6 +240,10 @@ public class Menu implements Initializable {
   UserInfo currentLoggedUser = new UserInfo();
   void setUserSession(UserInfo user) {
     currentLoggedUser = user;
+  }
+
+  void setWelcomeMessage() {
+    lastActionInfo.setText("Witaj " + currentLoggedUser.getName() + " w Systemie Rezerwacji Sal!");
   }
 
   @FXML
@@ -559,9 +554,22 @@ public class Menu implements Initializable {
 
   }
 
-  void bookIt() {
+  @FXML void bookIt() {
 
+    String path = "";
+    FXMLLoader fxmlLoader = new FXMLLoader();
+    try {
 
+      fxmlLoader.setLocation(getClass().getResource("/srs/reservation_confirm.fxml"));
+
+      Scene scene1 = new Scene(fxmlLoader.load(), 600, 400);
+      Stage stage1 = new Stage();
+      stage1.setTitle("Potwierdzenie");
+      stage1.setScene(scene1);
+      stage1.show();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
 
   }
 
@@ -601,6 +609,28 @@ public class Menu implements Initializable {
       }
     });
 
+  }
+
+
+
+  LocalDate getDateFromSelected() {
+    return dateStart.getValue();
+  }
+
+  LocalDate getDateToSelected() {
+    return dateEnd.getValue();
+  }
+
+  String getTimeFromSelected() {
+    return timeStart.textProperty().get();
+  }
+
+  String getTimeToSelected() {
+    return timeEnd.textProperty().get();
+  }
+
+  String getRoomNameSelected() {
+    return roomNameInfo.getText();
   }
 
 

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.cell.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import java.net.URL?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="srs.ReservationConfirm">
+   <center>
+      <GridPane BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="192.0" minWidth="10.0" prefWidth="70.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="322.0" minWidth="10.0" prefWidth="322.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="70.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="287.0" minHeight="10.0" prefHeight="287.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="194.0" minHeight="10.0" prefHeight="113.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <Button fx:id="confirmYes" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="Potwierdź" textAlignment="CENTER">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="confirmCancel" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="Anuluj" textAlignment="CENTER">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
+               <children>
+                  <Text fx:id="confirm1" strokeType="OUTSIDE" strokeWidth="0.0" text="Czy potwierdzasz rezerwację sali" />
+                  <Text fx:id="roomName" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                  <Text fx:id="confirm2" strokeType="OUTSIDE" strokeWidth="0.0" text="od" />
+                  <Text fx:id="timeFrom" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                  <Text fx:id="confirm4" strokeType="OUTSIDE" strokeWidth="0.0" text="do" />
+                  <Text fx:id="timeTo" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                  <Text fx:id="confirm5" strokeType="OUTSIDE" strokeWidth="0.0" text="?" />
+                  <Text fx:id="confirmAlert" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                  <Button fx:id="confirmExit" mnemonicParsing="false" text="Zakończ" />
+               </children>
+            </VBox>
+         </children>
+      </GridPane>
+   </center>
+</BorderPane>

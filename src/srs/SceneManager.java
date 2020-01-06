@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import srs.subtypes.UserInfo;
 
 import java.io.IOException;
 import java.util.Hashtable;
@@ -24,6 +25,21 @@ public class SceneManager {
     view.remove(name);
   }
 
+  public static void renderMenuUserLogged(UserInfo user) throws IOException {
+    FXMLLoader loader = new FXMLLoader(SceneManager.class.getResource(
+        "/srs/menu.fxml"));
+    Parent root = (Parent) loader.load();
+    Menu ctrl = loader.getController();
+    ctrl.setUserSession(user);
+    ctrl.setWelcomeMessage();
+
+    Scene scene = new Scene(root);
+    stage.setResizable(false);
+    stage.setScene(scene);
+    stage.show();
+
+  }
+
   public static void renderScene(String name) {
     String path = "";
     try {
@@ -31,6 +47,7 @@ public class SceneManager {
       Parent root = FXMLLoader.load(SceneManager.class.getResource(path));
       Scene scene = new Scene(root);
       stage.setScene(scene);
+      stage.setResizable(false);
       stage.show();
     } catch (IOException e) {
       System.err.println("Nie można załadować pliku XML z widokiem: " + path);

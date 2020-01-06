@@ -51,7 +51,7 @@
    <right>
       <VBox prefHeight="745.0" prefWidth="700.0" BorderPane.alignment="CENTER">
          <children>
-            <AnchorPane prefHeight="679.0" prefWidth="700.0">
+            <AnchorPane prefHeight="629.0" prefWidth="700.0">
                <children>
                   <VBox prefHeight="38.0" prefWidth="700.0">
                      <children>
@@ -64,12 +64,12 @@
                           </rowConstraints>
                            <children>
                               <Separator prefWidth="200.0" GridPane.valignment="BOTTOM" />
-                              <Text fx:id="lastActionInfo" strokeType="OUTSIDE" strokeWidth="0.0" text="Witaj w Systemie Rezerwacji Sal!" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                              <Text fx:id="lastActionInfo" strokeType="OUTSIDE" strokeWidth="0.0" text=" " GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                            </children>
                         </GridPane>
                      </children>
                   </VBox>
-                  <VBox layoutY="57.0" prefHeight="607.0" prefWidth="700.0">
+                  <VBox layoutY="57.0" prefHeight="573.0" prefWidth="700.0">
                      <children>
                         <HBox prefHeight="300.0" prefWidth="500.0">
                            <children>
@@ -213,7 +213,7 @@
                               </GridPane>
                            </children>
                         </HBox>
-                        <TableView fx:id="equipmentInfo" prefHeight="255.0" prefWidth="700.0">
+                        <TableView fx:id="equipmentInfo" prefHeight="204.0" prefWidth="700.0">
                           <columns>
                             <TableColumn fx:id="eqName" prefWidth="646.0" text="Nazwa">
                               <cellValueFactory>
@@ -227,12 +227,12 @@
                             </TableColumn>
                           </columns>
                         </TableView>
-                        <TextArea fx:id="equipmentDescriptionInfo" editable="false" prefHeight="51.0" prefWidth="700.0" />
+                        <TextArea fx:id="equipmentDescriptionInfo" editable="false" prefHeight="63.0" prefWidth="700.0" />
                      </children>
                   </VBox>
                </children>
             </AnchorPane>
-            <GridPane prefHeight="99.0" prefWidth="700.0">
+            <GridPane prefHeight="113.0" prefWidth="700.0">
               <columnConstraints>
                 <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
@@ -241,7 +241,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="bookIt" disable="true" mnemonicParsing="false" prefHeight="70.0" prefWidth="350.0" text="Rezerwuj" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                  <Button fx:id="bookIt" disable="true" mnemonicParsing="false" onAction="#bookIt" prefHeight="70.0" prefWidth="350.0" text="Rezerwuj" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin>
@@ -267,7 +267,7 @@
          <children>
             <ToolBar prefHeight="47.0" prefWidth="764.0">
                <items>
-                  <CheckBox fx:id="showOnlyToReservation" mnemonicParsing="false" prefHeight="17.0" prefWidth="228.0" text="Pokazuj tylko dostępne do rezerwacji" />
+                  <CheckBox fx:id="showOnlyToReservation" mnemonicParsing="false" prefHeight="21.0" prefWidth="135.0" text="Tylko dostępne" />
                   <CheckBox fx:id="takeDatesToQuery" mnemonicParsing="false" text="Uwzględnij daty" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="| Od:" />
                   <DatePicker fx:id="dateStart" prefHeight="25.0" prefWidth="130.0" />
@@ -293,8 +293,8 @@
          <children>
             <ToolBar prefHeight="40.0" prefWidth="300.0">
               <items>
-                  <ComboBox fx:id="chooseBuildingCombo" onAction="#buildingAndTypeChoosed" prefHeight="25.0" prefWidth="140.0" />
-                  <ComboBox fx:id="chooseTypeCombo" onAction="#buildingAndTypeChoosed" prefWidth="140.0" />
+                  <ComboBox fx:id="chooseBuildingCombo" onAction="#buildingAndTypeChoosed" prefHeight="25.0" prefWidth="135.0" />
+                  <ComboBox fx:id="chooseTypeCombo" onAction="#buildingAndTypeChoosed" prefWidth="135.0" />
               </items>
             </ToolBar>
             <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="300.0" GridPane.rowIndex="1">
@@ -305,19 +305,19 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <TableView fx:id="tableRooms" prefHeight="252.0" prefWidth="295.0">
+                  <TableView fx:id="tableRooms" prefHeight="252.0" prefWidth="290.0">
                     <columns>
-                      <TableColumn fx:id="idBuilding" prefWidth="75.0" text="Sala">
+                      <TableColumn fx:id="idBuilding" prefWidth="70.0" text="Sala">
                         <cellValueFactory>
                               <PropertyValueFactory property="name" />
                            </cellValueFactory>
                       </TableColumn>
-                      <TableColumn fx:id="name" prefWidth="50.0" text="Miejsca">
+                      <TableColumn fx:id="name" prefWidth="70.0" text="Miejsca">
                           <cellValueFactory>
                               <PropertyValueFactory property="seats" />
                            </cellValueFactory>
                       </TableColumn>
-                        <TableColumn fx:id="type" prefWidth="175.0" text="Typ">
+                        <TableColumn fx:id="type" prefWidth="158.0" text="Typ">
                             <cellValueFactory>
                               <PropertyValueFactory property="type" />
                            </cellValueFactory>

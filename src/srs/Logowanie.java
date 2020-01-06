@@ -1,10 +1,13 @@
 package srs;
 
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -14,6 +17,7 @@ import srs.subtypes.BuildingChoose;
 import javafx.scene.text.Text;
 import srs.subtypes.UserInfo;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -77,7 +81,7 @@ public class Logowanie implements Initializable {
       } else {
         wrongLogin.setText("Błędny login lub hasło!");
       }
-    } catch (SQLException e) {
+    } catch (SQLException | IOException e) {
       System.out.println(e);
     } finally {
       if (stmt != null) {
@@ -124,11 +128,10 @@ public class Logowanie implements Initializable {
   }
 
   @FXML
-  protected void showMenu(ActionEvent event, UserInfo user) {
-    SceneManager.renderScene("menu");
-    FXMLLoader fxmlLoader = new FXMLLoader();
-    Menu menu = fxmlLoader.getController();
-    menu.setUserSession(user);
+  protected void showMenu(ActionEvent event, UserInfo user) throws IOException {
+
+      SceneManager.renderMenuUserLogged(user);
+
   }
 
 }
