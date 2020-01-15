@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="entities.ReservationsViewEntity" table="reservations_view">
+        <id name="idReservation" column="ID_reservation">
+            <generator class="increment"/>
+        </id>
+        <property name="idRoom" column="ID_room" />
+        <property name="roomName" column="roomName" />
+        <property name="roomFullName" column="roomFullName" />
+        <property name="seats" column="seats" />
+        <property name="floor" column="floor" />
+        <property name="wing" column="wing" />
+        <property name="maxTimeReservation" column="max_time_reservation" />
+        <property name="reservationAbility" column="reservation_ability" />
+        <property name="idBuilding" column="ID_building" />
+        <property name="buildingName" column="buildingName" />
+        <property name="buildingFullName" column="buildingFullName" />
+        <property name="town" column="town" />
+        <property name="address" column="address" />
+        <property name="area" column="area" />
+        <property name="idType" column="id_type" />
+        <property name="typeName" column="typeName" />
+        <property name="meetTimeStart" column="meet_time_start" />
+        <property name="meetTimeEnd" column="meet_time_end" />
+        <property name="idUser" column="ID_user" />
+        <property name="userName" column="userName" />
+        <property name="userSurname" column="userSurname" />
+        <property name="userDescription" column="userDescription" />
+    </class>
+</hibernate-mapping>

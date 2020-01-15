@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class name="entities.EquipmentInfoEntity" table="equipment_info">
+    <id name="idAlloc" column="ID_alloc">
+      <generator class="increment"/>
+    </id>
+    <property name="idEquipment" column="ID_equipment" />
+    <property name="name" column="name" />
+    <property name="description" column="description" />
+    <property name="idRoom" column="ID_room" />
+    <property name="amount" column="amount" />
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="entities.RoomsEntity" table="rooms">
+        <id name="idRoom" column="ID_room">
+            <generator class="increment"/>
+        </id>
+        <property name="idBuilding" column="ID_building" />
+        <property name="name" column="name" />
+        <property name="fullName" column="fullName" />
+        <property name="seats" column="seats" />
+        <property name="floor" column="floor" />
+        <property name="wing" column="wing" />
+        <property name="maxTimeReservation" column="max_time_reservation" />
+        <property name="reservationAbility" column="reservation_ability" />
+        <property name="idType" column="id_type" />
+    </class>
+</hibernate-mapping>
